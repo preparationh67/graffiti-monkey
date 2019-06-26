@@ -403,7 +403,7 @@ class Logging(object):
     _log_simple_format = '%(asctime)s [%(levelname)s] %(message)s'
     _log_detailed_format = '%(asctime)s [%(levelname)s] [%(name)s(%(lineno)s):%(funcName)s] %(message)s'
 
-    def configure(self, verbosity = None):
+    def configure(self, verbosity = 0):
         ''' Configure the logging format and verbosity '''
 
         # Configure our logging output
