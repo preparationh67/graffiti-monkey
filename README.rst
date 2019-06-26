@@ -110,7 +110,7 @@ Alternatively, if you prefer to install from source:
 Configuration
 -------------
 
-This project uses `Boto <http://boto.readthedocs.org/en/latest/index.html>`__ to
+This project uses `Boto3 <https://boto3.amazonaws.com/v1/documentation/api/latest/index.html>`__ to
 call the AWS APIs. You can pass your AWS credentials to Boto can by using a
 :code:`.boto` file, IAM Roles or environment variables. Full information can be
 found here:
