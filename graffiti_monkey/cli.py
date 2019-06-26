@@ -113,7 +113,7 @@ class GraffitiMonkeyCli(object):
     def set_region(self):
         if self.args.region:
             self.region = self.args.region
-        elif "region" in self.config.keys():
+        elif "region" in list(self.config.keys()):
             self.region = self.config["region"]
         else:
             # If no region was specified, assume this is running on an EC2 instance
@@ -130,7 +130,7 @@ class GraffitiMonkeyCli(object):
     def set_profile(self):
         if self.args.profile:
             self.profile = self.args.profile
-        elif "profile" in self.config.keys():
+        elif "profile" in list(self.config.keys()):
             self.profile = self.config["profile"]
         else:
             self.profile = 'default'
@@ -145,17 +145,17 @@ class GraffitiMonkeyCli(object):
     def set_volumes(self):
         if self.args.volumes:
             self.volumes = self.args.volumes
-        elif "_volumes_to_tag" in self.config.keys():
+        elif "_volumes_to_tag" in list(self.config.keys()):
             self.volumes = self.config["_volumes_to_tag"]
 
     def set_snapshots(self):
         if self.args.snapshots:
             self.snapshots = self.args.snapshots
-        elif "_snapshots_to_tag" in self.config.keys():
+        elif "_snapshots_to_tag" in list(self.config.keys()):
             self.snapshots = self.config["_snapshots_to_tag"]
 
     def set_instancefilter(self):
-        if "_instance_filter" in self.config.keys():
+        if "_instance_filter" in list(self.config.keys()):
             self.instancefilter = self.config["_instance_filter"]
 
     def set_novolumes(self):

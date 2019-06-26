@@ -14,7 +14,7 @@
 
 import logging
 
-from exceptions import *
+from .exceptions import *
 
 import boto3
 import botocore
@@ -110,7 +110,7 @@ class GraffitiMonkey(object):
             log.info('Using volume list from cli/config file')
 
             # Max of 200 filters in a request
-            for chunk in (self._volumes_to_tag[n:n+200] for n in xrange(0, len(self._volumes_to_tag), 200)):
+            for chunk in (self._volumes_to_tag[n:n+200] for n in range(0, len(self._volumes_to_tag), 200)):
                 chunk_volumes = self._conn.get_all_volumes(
                         filters = { 'volume-id': chunk }
                         )
@@ -252,7 +252,7 @@ class GraffitiMonkey(object):
             log.info('Using snapshot list from cli/config file')
 
             # Max of 200 filters in a request
-            for chunk in (self._snapshots_to_tag[n:n+200] for n in xrange(0, len(self._snapshots_to_tag), 200)):
+            for chunk in (self._snapshots_to_tag[n:n+200] for n in range(0, len(self._snapshots_to_tag), 200)):
                 chunk_snapshots = self._conn.get_all_snapshots(
                         filters = { 'snapshot-id': chunk }
                         )
@@ -286,7 +286,7 @@ class GraffitiMonkey(object):
         extra_volume_ids = [id for id in all_volume_ids if id not in volumes]
 
         ''' Fetch any extra volumes that weren't carried over from tag_volumes() (if any) '''
-        for chunk in (extra_volume_ids[n:n+200] for n in xrange(0, len(extra_volume_ids), 200)):
+        for chunk in (extra_volume_ids[n:n+200] for n in range(0, len(extra_volume_ids), 200)):
             extra_volumes = self._conn.describe_volumes(
                     Filters=[{"Name": "volume-id", "Values": chunk}]
                     )
@@ -365,7 +365,7 @@ class GraffitiMonkey(object):
         if "Tags" in resource:
             for tag_set in resource["Tags"]:
                 resource_tags[tag_set["Key"]] = tag_set["Value"]
-            for tag_key, tag_value in tags.iteritems():
+            for tag_key, tag_value in tags.items():
                 if not tag_key in resource_tags or resource_tags[tag_key] != tag_value:
                     delta_tags[tag_key] = tag_value
         else:
@@ -377,7 +377,7 @@ class GraffitiMonkey(object):
         log.info('Tagging %s with [%s]', resource[resource_id], delta_tags)
 
         boto3_formatted_tags = []
-        for key in delta_tags.keys():
+        for key in list(delta_tags.keys()):
             boto3_formatted_tags.append({ 'Key': key, 'Value' : delta_tags[key]})
         self._conn.create_tags(Resources=[resource[resource_id]], Tags=boto3_formatted_tags)
         # Need to replace tags in the resource variable
@@ -388,7 +388,7 @@ class GraffitiMonkey(object):
             for tag_set in resource["Tags"]:
                 resource_keys.append(tag_set["Key"])
 
-            for key in delta_tags.keys():
+            for key in list(delta_tags.keys()):
                 tag_key = key
                 tag_value = delta_tags[key]
                 if tag_key in resource_keys:
